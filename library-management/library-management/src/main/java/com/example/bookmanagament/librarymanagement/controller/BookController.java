@@ -1,13 +1,12 @@
-package com.example.bookmanagement.Controller;
+package com.example.bookmanagament.librarymanagement.controller;
 
-
-
-import com.example.bookmanagement.Book;
-import com.example.bookmanagement.Repository.BookRepository;
-import com.example.bookmanagement.Service.BookService;
-import com.example.bookmanagement.Service.FileStorageService;
+import com.example.bookmanagament.librarymanagement.Book;
+import com.example.bookmanagament.librarymanagement.Repository.BookRepository;
+import com.example.bookmanagament.librarymanagement.Service.BookService;
+import com.example.bookmanagament.librarymanagement.Service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,29 +14,24 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-
 @Controller
 @RequestMapping("books")
 public class BookController {
     private final BookService bookService;
     @Autowired
-    private BookRepository bookRepository;
-
+    private  BookRepository bookRepository;
     @Autowired
     private FileStorageService fileStorageService;
-
     @Autowired
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
+    public  BookController(BookService bookService){
+        this.bookService=bookService;
     }
-
     @GetMapping
-    public String listBooks(Model model) {
+    public String ListBooks(Model model){
         List<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         return "book/list";
     }
-
     @GetMapping("/new")
     public String showAddForm(Model model) {
         model.addAttribute("book", new Book());
@@ -95,11 +89,3 @@ public class BookController {
         return "book/search";
     }
 }
-
-
-
-
-
-
-
-

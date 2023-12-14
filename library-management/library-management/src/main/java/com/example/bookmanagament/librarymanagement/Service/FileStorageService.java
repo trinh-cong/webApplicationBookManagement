@@ -1,4 +1,5 @@
-package com.example.bookmanagement.Service;
+package com.example.bookmanagament.librarymanagement.Service;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
