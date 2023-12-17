@@ -1,4 +1,4 @@
-package com.example.bookmanagament.librarymanagement;
+package com.example.bookmanagament.librarymanagement.model;
 
 import jakarta.persistence.*;
 import org.springframework.web.multipart.MultipartFile;

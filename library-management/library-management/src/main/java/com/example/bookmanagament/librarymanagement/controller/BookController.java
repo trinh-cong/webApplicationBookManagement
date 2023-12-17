@@ -1,91 +1,65 @@
 package com.example.bookmanagament.librarymanagement.controller;
 
-import com.example.bookmanagament.librarymanagement.Book;
-import com.example.bookmanagament.librarymanagement.Repository.BookRepository;
+import com.example.bookmanagament.librarymanagement.model.Book;
 import com.example.bookmanagament.librarymanagement.Service.BookService;
-import com.example.bookmanagament.librarymanagement.Service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
+
+
 @Controller
-@RequestMapping("books")
+@RequestMapping("/books")
 public class BookController {
-    private final BookService bookService;
     @Autowired
-    private  BookRepository bookRepository;
-    @Autowired
-    private FileStorageService fileStorageService;
-    @Autowired
-    public  BookController(BookService bookService){
-        this.bookService=bookService;
-    }
+    private BookService bookService;
+
     @GetMapping
-    public String ListBooks(Model model){
+    public String getAllBooks(Model model) {
         List<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         return "book/list";
     }
-    @GetMapping("/new")
-    public String showAddForm(Model model) {
+
+    @GetMapping("/add")
+    public String showAddBookForm(Model model) {
         model.addAttribute("book", new Book());
         return "book/add";
     }
 
-    @PostMapping("/new")
-    public String addBook(@ModelAttribute Book book, @RequestParam("imageFile") MultipartFile imageFile) {
-        if (imageFile != null && !imageFile.isEmpty()) {
-            try {
-                String fileName = fileStorageService.storeFile(imageFile);
-                book.setImageUrl(fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        bookRepository.save(book);
-        return "redirect:/books";
-    }
-
-    @GetMapping("/create")
-    public String showCreateForm(Model model) {
-        model.addAttribute("book", new Book());
-        return "book/create";
-    }
-
-    @PostMapping("/create")
-    public String createBook(@ModelAttribute("book") Book book) {
-        bookService.saveBook(book);
+    @PostMapping("/add")
+    public String addBook(@ModelAttribute Book book, @RequestParam("file") MultipartFile file) {
+        bookService.saveBook(book, file);
         return "redirect:/books";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String showEditBookForm(@PathVariable Long id, Model model) {
         Book book = bookService.getBookById(id);
         model.addAttribute("book", book);
         return "book/edit";
     }
 
     @PostMapping("/edit/{id}")
+    public String editBook(@PathVariable Long id, @ModelAttribute Book book, @RequestParam("file") MultipartFile file) {
+        bookService.saveBook(book, file);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return "redirect:/books";
     }
 
     @GetMapping("/search")
-    public String searchBooks(@RequestParam("keyword") String keyword, Model model) {
-        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(keyword);
+    public String searchBooks(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+        List<Book> books = (keyword != null && !keyword.isEmpty()) ? bookService.searchBooks(keyword) : bookService.getAllBooks();
         model.addAttribute("books", books);
         return "book/list";
-    }
-    @GetMapping("/search-form")
-    public String showSearchForm() {
-        return "book/search";
     }
 }
