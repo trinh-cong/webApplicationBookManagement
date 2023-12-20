@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Book List</title>
-    <link rel="stylesheet" href="../../static/style/list.css">
-    <link th:href="@{/static/style/styles.css}" rel="stylesheet"/>
-<!--    <img th:src="@{/uploads/example.jpg}" alt="Example Image"/>-->
+    <link th:href="@{/style/list.css}"rel="stylesheet">
+
 </head>
 <body>
 
@@ -31,8 +30,7 @@
         <td th:text="${book.description}"></td>
         <td th:text="${book.publisher}"></td>
         <td>
-            <img th:src="@{'${book.imageUrl}'}" alt="Book Image" style="max-width: 100px; max-height: 100px;"/>
-<!--            <img th:src="@{/images/{filename}(filename=${book.imageUrl})}" alt="Book Image" style="max-width: 100px; max-height: 100px;"/>-->
+            <img th:src="@{'/uploads/' + ${book.imageUrl}}" alt="Book Image" style="max-width: 100px; max-height: 100px;"/>
         </td>
         <td>
             <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a> |

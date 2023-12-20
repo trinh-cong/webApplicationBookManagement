@@ -1,7 +1,7 @@
 package com.example.bookmanagament.librarymanagement.controller;
 
 import com.example.bookmanagament.librarymanagement.model.Book;
-import com.example.bookmanagament.librarymanagement.Service.BookService;
+import com.example.bookmanagament.librarymanagement.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

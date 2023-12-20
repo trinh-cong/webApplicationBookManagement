@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Book</title>
-</head>
+    <link th:href="@{/style/edit add.css}"rel="stylesheet">
 <body>
 
 <h2>Add Book</h2>
@@ -13,7 +13,7 @@
     <label>Price: <input type="text" th:field="*{price}" /></label><br/>
     <label>Description: <input type="text" th:field="*{description}" /></label><br/>
     <label>Publisher: <input type="text" th:field="*{publisher}" /></label><br/>
-    <label>Image: <input type="file" name="file" /></label><br/>
+    <label>Image: <input type="file" name="file" accept=".jpg, .jpeg, .png" /></label><br/>
     <input type="submit" value="Add Book"/>
 </form>
 

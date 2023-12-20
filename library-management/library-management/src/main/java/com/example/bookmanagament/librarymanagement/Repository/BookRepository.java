@@ -1,4 +1,4 @@
-package com.example.bookmanagament.librarymanagement.Repository;
+package com.example.bookmanagament.librarymanagement.repository;
 
 
 import com.example.bookmanagament.librarymanagement.model.Book;
@@ -9,4 +9,5 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    List<Book> findByTitleContainingOrDescriptionContainingOrPublisherContaining(String keyword1, String keyword2, String keyword3);}
+    List<Book> findByTitleContainingOrDescriptionContainingOrPublisherContaining(String keyword1, String keyword2, String keyword3);
+}

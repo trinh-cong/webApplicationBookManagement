@@ -1,7 +1,7 @@
-package com.example.bookmanagament.librarymanagement.Service;
+package com.example.bookmanagament.librarymanagement.service;
 
 import com.example.bookmanagament.librarymanagement.model.Book;
-import com.example.bookmanagament.librarymanagement.Repository.BookRepository;
+import com.example.bookmanagament.librarymanagement.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
