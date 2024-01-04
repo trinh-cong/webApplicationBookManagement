@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<h2>Add Book</h2>
+
+<form method="post" enctype="multipart/form-data" th:object="${book}" th:action="@{/templates/books/add}">
+  <label>Title: <input type="text" th:field="*{title}"required></label>
+  <label>Price: <input type="text" th:field="*{price}" required/></label><br/>
+  <label>Description: <textarea th:field="*{description}" required></textarea></label><br/>
+  <label>Publisher:
+    <select th:field="*{publisher}" required>
+      <option th:each="publisher : ${publisher}" th:value="${publisher}" th:text="${publisher.name}"></option>
+    </select>
+  </label><br/>
+  <label>Image: <input type="file" name="file" accept=".jpg, .jpeg, .png" required/></label><br/>
+  <input type="submit" value="Add Book"/>
+</form>
+
+<br/>
+
+<a th:href="@{/templates/books}">Back to Book List</a>
+</body>
+</html>
