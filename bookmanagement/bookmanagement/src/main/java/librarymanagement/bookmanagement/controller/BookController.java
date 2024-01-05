@@ -44,7 +44,7 @@ public class BookController {
         return "books/add";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add/save")
     public String createBook(@ModelAttribute("book") Book book,
                              @RequestParam("imageFile") MultipartFile imageFile,
                              RedirectAttributes redirectAttributes) {

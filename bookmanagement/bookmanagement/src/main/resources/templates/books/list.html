@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -32,7 +32,7 @@
         <td th:text="${book.description}"></td>
         <td th:text="${book.publisher.name}"></td>
         <td>
-            <img th:src="${book.imageUrl}" th:alt="${book.title}" height="50"/>
+            <img th:src="${book.imageUrl}" th:alt="${book.title}" style="height: 100px ;width: 100px" />
         </td>
         <td>
             <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a> |
