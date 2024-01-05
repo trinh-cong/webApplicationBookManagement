@@ -1,5 +1,6 @@
 package librarymanagement.bookmanagement.service;
 
+import com.cloudinary.Cloudinary;
 import librarymanagement.bookmanagement.model.Book;
 import librarymanagement.bookmanagement.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -18,37 +19,39 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Autowired
-    private CloudinaryService cloudinaryService; // Cần tạo CloudinaryService
+    private Cloudinary cloudinary;
 
     @Override
-    public List<Book> getAllBooks() {
-        return null;
+    public Page<Book> getAllBooks(Pageable pageable) {
+        return bookRepository.findAll(pageable);
+    }
+
+    @Override
+    public void saveBook(Book book, MultipartFile imageFile) {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                Map uploadResult = cloudinary.uploader().upload(imageFile.getBytes(), Map.of());
+                String imageUrl = (String) uploadResult.get("url");
+                book.setImageUrl(imageUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        bookRepository.save(book);
     }
 
     @Override
     public Book getBookById(Long id) {
-        return null;
-    }
-
-    @Override
-    public void saveBook(Book book, MultipartFile file) throws IOException {
-
+        return bookRepository.findById(id).orElse(null);
     }
 
     @Override
     public void deleteBook(Long id) {
-
+        bookRepository.deleteById(id);
     }
 
     @Override
-    public List<Book> searchBooks(String keyword) {
-        return null;
+    public Page<Book> searchBooks(String title, Pageable pageable) {
+        return bookRepository.findByTitleContaining(title, pageable);
     }
-
-    @Override
-    public Page<Book> getAllBooksPaged(Pageable pageable) {
-        return null;
-    }
-
-    // Implement các phương thức từ BookService
 }

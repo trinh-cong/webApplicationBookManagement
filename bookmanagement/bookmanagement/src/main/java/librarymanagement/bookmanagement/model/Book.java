@@ -1,15 +1,11 @@
 package librarymanagement.bookmanagement.model;
-import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Entity
 public class Book {
@@ -30,6 +26,9 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
+
+    @Transient
+    private MultipartFile imageFile;
 
     private String imageUrl;
 
@@ -73,6 +72,14 @@ public class Book {
         this.publisher = publisher;
     }
 
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -80,4 +87,5 @@ public class Book {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+// Getters and setters
 }

@@ -4,24 +4,29 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<body>
 
-<h2>Add Book</h2>
+<h2>Add New Book</h2>
 
-<form method="post" enctype="multipart/form-data" th:object="${book}" th:action="@{/templates/books/add}">
-  <label>Title: <input type="text" th:field="*{title}"required></label>
-  <label>Price: <input type="text" th:field="*{price}" required/></label><br/>
-  <label>Description: <textarea th:field="*{description}" required></textarea></label><br/>
-  <label>Publisher:
-    <select th:field="*{publisher}" required>
-      <option th:each="publisher : ${publisher}" th:value="${publisher}" th:text="${publisher.name}"></option>
-    </select>
-  </label><br/>
-  <label>Image: <input type="file" name="file" accept=".jpg, .jpeg, .png" required/></label><br/>
-  <input type="submit" value="Add Book"/>
+<form th:action="@{/books/add}" method="post" enctype="multipart/form-data">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required><br>
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" required><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
+
+    <label for="publisher">Publisher:</label>
+    <input type="text" id="publisher" name="publisher" required><br>
+
+    <label for="image">Image:</label>
+    <input type="file" id="image" name="image" accept="image/*"><br>
+
+    <button type="submit">Save</button>
 </form>
 
-<br/>
-
-<a th:href="@{/templates/books}">Back to Book List</a>
+<a th:href="@{/books}">Back to Book List</a>
 </body>
 </html>
