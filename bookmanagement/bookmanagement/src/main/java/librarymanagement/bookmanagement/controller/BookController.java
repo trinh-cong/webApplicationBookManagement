@@ -86,6 +86,7 @@ public class BookController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", bookPage.getTotalPages());
         model.addAttribute("searchTitle", title);
-        return "books/search";
+         return  "/books/search";
     }
+
 }

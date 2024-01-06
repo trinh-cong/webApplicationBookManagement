@@ -1,0 +1,40 @@
+/* Định dạng form search */
+form {
+    margin-bottom: 20px;
+}
+
+/* Định dạng bảng kết quả */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Định dạng các ô trong bảng */
+td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Định dạng phân trang */
+ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+li {
+    margin-right: 5px;
+}
+
+/* Định dạng nút phân trang */
+a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.active {
+    background-color: #4CAF50;
+    color: white;
+}

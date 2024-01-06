@@ -8,13 +8,12 @@
 <body>
 
 <h2>Book List</h2>
-<div >
-    <form action="@{/books/search}" method="get">
-        <input type="text" name="keyword" placeholder="Search by title"/>
+<div>
+    <form th:action="@{/books/search}" method="get">
+        <input type="text" name="title" placeholder="Search by title" th:value="${searchTitle}"/>
         <button type="submit">Search</button>
     </form>
 </div>
-
 <table>
     <tr>
         <th>ID</th>
