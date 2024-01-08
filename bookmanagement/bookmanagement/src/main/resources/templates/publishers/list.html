@@ -1,0 +1,50 @@
+<!-- src/main/resources/templates/publishers/list.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Publishers</title>
+    <link rel="stylesheet" type="text/css" href="/style/list-publishers.css">
+</head>
+<body>
+<h2>List Publishers</h2>
+<div>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="publisher : ${publishers}">
+            <td th:text="${publisher.id}"></td>
+            <td th:text="${publisher.name}"></td>
+            <td>
+                <a th:href="@{/publishers/edit/{id}(id=${publisher.id})}">Edit</a>
+                <a th:href="@{/publishers/delete/{id}(id=${publisher.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <ul>
+            <li th:if="${currentPage > 0}">
+                <a th:href="@{/publishers(page=${currentPage - 1})}">&lt;&lt;</a>
+            </li>
+            <li th:each="p, stat : ${#numbers.sequence(0, totalPages - 1)}" th:class="${currentPage == stat.index} ? 'active' : ''">
+                <a th:href="@{/publishers(page=${stat.index})}" th:text="${stat.index + 1}"></a>
+            </li>
+            <li th:if="${currentPage < totalPages - 1}">
+                <a th:href="@{/publishers(page=${currentPage + 1})}">&gt;&gt;</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div>
+    <a th:href="@{/publishers/add}">Add New Publisher</a>
+</div>
+</body>
+</html>

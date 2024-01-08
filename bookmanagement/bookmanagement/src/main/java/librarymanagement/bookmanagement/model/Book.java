@@ -1,9 +1,7 @@
 package librarymanagement.bookmanagement.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -17,9 +15,10 @@ public class Book {
     @NotEmpty(message = "Title cannot be empty")
     @Size(max = 255, message = "Title must be less than 255 characters")
     private String title;
-
     @NotNull(message = "Price cannot be null")
+    @PositiveOrZero(message = "Price must be greater than or equal to 0")
     private Double price;
+
 
     private String description;
 

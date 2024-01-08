@@ -36,7 +36,17 @@ public class BookServiceImpl implements BookService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else {
+            // Giữ nguyên ảnh cũ khi không có ảnh mới được chọn
+            Book existingBook = bookRepository.findById(book.getId()).orElse(null);
+            if (existingBook != null) {
+                book.setImageUrl(existingBook.getImageUrl());
+            }
         }
+        bookRepository.save(book);
+    }
+    @Override
+    public void saveBook(Book book) {
         bookRepository.save(book);
     }
 
@@ -54,4 +64,5 @@ public class BookServiceImpl implements BookService {
     public Page<Book> searchBooks(String title, Pageable pageable) {
         return bookRepository.findByTitleContaining(title, pageable);
     }
+
 }

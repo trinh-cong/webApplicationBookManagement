@@ -4,18 +4,26 @@ package librarymanagement.bookmanagement.service;
 import librarymanagement.bookmanagement.model.Publisher;
 import librarymanagement.bookmanagement.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class PublisherServiceImpl implements PublisherService {
-
     @Autowired
     private PublisherRepository publisherRepository;
 
     @Override
     public List<Publisher> getAllPublishers() {
         return publisherRepository.findAll();
+    }
+
+
+    @Override
+    public Page<Publisher> getAllPublishers(Pageable pageable) {
+        return publisherRepository.findAll(pageable);
     }
 
     @Override

@@ -47,8 +47,13 @@ public class BookController {
     @GetMapping("/add")
     public String showCreateForm(Model model) {
         model.addAttribute("book", new Book());
+        List<Publisher> publishers = publisherService.getAllPublishers();
+        model.addAttribute("publishers", publishers);
+
+
         return "books/add";
     }
+
 
     @PostMapping("/add/save")
     public String createBook(@ModelAttribute("book") Book book,

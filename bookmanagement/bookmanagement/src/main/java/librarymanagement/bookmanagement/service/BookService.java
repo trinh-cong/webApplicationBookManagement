@@ -11,7 +11,7 @@ public interface BookService {
     Page<Book> getAllBooks(Pageable pageable);
 
     void saveBook(Book book, MultipartFile imageFile);
-
+    void saveBook(Book book);
 
     Book getBookById(Long id);
 
