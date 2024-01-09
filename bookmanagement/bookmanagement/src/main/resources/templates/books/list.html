@@ -29,7 +29,11 @@
         <td th:text="${book.title}"></td>
         <td th:text="${book.price}"></td>
         <td th:text="${book.description}"></td>
-        <td th:text="${book.publisher.name} "></td>
+        <td>
+            <a th:href="@{/publishers/publisherDetails/{id}(id=${book.publisher.id})}">
+                <span th:text="${book.publisher.name}"></span>
+            </a>
+        </td>
         <td>
             <img th:src="${book.imageUrl}" th:alt="${book.title}" style="height: 100px ;width: 100px" />
         </td>
@@ -49,10 +53,21 @@
             <a th:href="@{/books(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
         </li>
         <li th:class="${currentPage == totalPages - 1} ? 'disabled' : ''">
-            <a th:href="@{/books(page=${totalPages - 1})}">&gt;&gt;</a>
+            <a th:href="@{/books(page=${currentPage + 1})}">&gt;&gt;</a>
         </li>
     </ul>
 </div>
+<!--<ul>-->
+<!--    <li th:if="${currentPage > 0}">-->
+<!--        <a th:href="@{/publishers(page=${currentPage - 1})}">&lt;&lt;</a>-->
+<!--    </li>-->
+<!--    <li th:each="p, stat : ${#numbers.sequence(0, totalPages - 1)}" th:class="${currentPage == stat.index} ? 'active' : ''">-->
+<!--        <a th:href="@{/publishers(page=${stat.index})}" th:text="${stat.index + 1}"></a>-->
+<!--    </li>-->
+<!--    <li th:if="${currentPage < totalPages - 1}">-->
+<!--        <a th:href="@{/publishers(page=${currentPage + 1})}">&gt;&gt;</a>-->
+<!--    </li>-->
+<!--</ul>-->
 
 <a th:href="@{/books/add}">Add New Book</a>
 

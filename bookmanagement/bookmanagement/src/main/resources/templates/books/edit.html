@@ -4,25 +4,67 @@
   <meta charset="UTF-8">
   <title>Edit Book</title>
   <link rel="stylesheet" th:href="@{/style/edit.css}" />
+  <style>
+    .error-message {
+      color: red;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
 
 <h2>Edit Book</h2>
 
-<form method="post" enctype="multipart/form-data" th:object="${book}" th:action="@{/books/edit/{id}(id=${book.id})}">
-  <label>Title: <input type="text" th:field="*{title}" required/></label><br/>
-  <label>Price: <input type="text" th:field="*{price}" required/></label><br/>
+<form id="editBookForm" method="post" enctype="multipart/form-data" th:object="${book}" th:action="@{/books/edit/{id}(id=${book.id})}">
+  <label>Title: <input type="text" th:field="*{title}" required/></label>
+  <div id="titleError" class="error-message"></div><br/>
+
+  <label>Price: <input type="text" th:field="*{price}" required/></label>
+  <div id="priceError" class="error-message"></div><br/>
+
   <label>Description: <textarea th:field="*{description}" required></textarea></label><br/>
+
   <label>Publisher:
     <select th:field="*{publisher}" required>
       <option th:each="publisher : ${publishers}" th:value="${publisher.id}" th:text="${publisher.name}" th:selected="${publisher.id eq book.publisher.id}"></option>
     </select>
   </label>
   <br/>
+
   <label>Image: <input type="file" name="imageFile" accept=".jpg, .jpeg, .png" /></label><br/>
-  <input type="submit" value="Update Book"/>
+
+  <input type="submit" value="Update Book" onclick="validateForm()" />
 </form>
 <br/>
 <a th:href="@{/templates/books}">Back to Book List</a>
+
+<script>
+  function validateForm() {
+    resetErrorMessages();
+
+    var title = document.getElementById('title').value;
+    var price = document.getElementById('price').value;
+
+    if (title.trim() === '') {
+      showError('title', 'Title is required.');
+      event.preventDefault();
+    }
+
+    if (price.trim() === '' || isNaN(price) || parseFloat(price) < 0) {
+      showError('price', 'Price must be a non-negative number.');
+      event.preventDefault();
+    }
+  }
+
+  function showError(field, message) {
+    document.getElementById(field + 'Error').innerHTML = message;
+  }
+
+  function resetErrorMessages() {
+    document.getElementById('titleError').innerHTML = '';
+    document.getElementById('priceError').innerHTML = '';
+  }
+</script>
+
 </body>
 </html>

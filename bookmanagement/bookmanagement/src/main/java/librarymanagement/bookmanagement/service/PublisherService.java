@@ -1,5 +1,6 @@
 package librarymanagement.bookmanagement.service;
 
+import librarymanagement.bookmanagement.model.Book;
 import librarymanagement.bookmanagement.model.Publisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,4 +15,6 @@ public interface PublisherService {
     Publisher getPublisherById(Long id);
     void savePublisher(Publisher publisher);
     void deletePublisher(Long id);
+    List<Book> getBooksByPublisherId(Long publisherId);
+
 }

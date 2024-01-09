@@ -1,0 +1,27 @@
+<!-- publisherDetails.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Publisher Details</title>
+    <!-- Add any additional styles or scripts needed for the publisher details page -->
+    <link rel="stylesheet" text="text.css" href="/style/publishersDetails.css">
+</head>
+<body>
+
+<h2>Publisher Details</h2>
+
+<p th:text="'Publisher ID: ' + ${publisher.id}"></p>
+<p th:text="'Publisher Name: ' + ${publisher.name}"></p>
+
+<h3>Books by this Publisher:</h3>
+<ul>
+    <li th:each="book : ${books}">
+        <span th:text="${book.title}"></span>
+    </li>
+</ul>
+
+<!-- Add any additional content or styling as needed -->
+
+</body>
+</html>

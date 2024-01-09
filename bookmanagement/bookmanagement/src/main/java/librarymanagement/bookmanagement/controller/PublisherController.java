@@ -1,5 +1,6 @@
 package librarymanagement.bookmanagement.controller;
 
+import librarymanagement.bookmanagement.model.Book;
 import librarymanagement.bookmanagement.model.Publisher;
 import librarymanagement.bookmanagement.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.data.domain.PageRequest;
 
 
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
 @Controller
 @RequestMapping("/publishers")
 public class PublisherController {
@@ -61,5 +65,21 @@ public class PublisherController {
         publisherService.deletePublisher(id);
         return "redirect:/publishers";
     }
-}
 
+    @GetMapping("/publisherDetails/{id}")
+    public String showPublisherDetails(@PathVariable Long id, Model model) {
+        try {
+            Publisher publisher = publisherService.getPublisherById(id);
+
+            List<Book> books = publisherService.getBooksByPublisherId(id);
+
+            model.addAttribute("publisher", publisher);
+            model.addAttribute("books", books);
+
+            return "publishers/publisherDetails"; // Tên template Thymeleaf cho chi tiết nhà xuất bản
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+}

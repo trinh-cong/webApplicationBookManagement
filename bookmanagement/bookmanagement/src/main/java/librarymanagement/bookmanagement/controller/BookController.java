@@ -49,8 +49,6 @@ public class BookController {
         model.addAttribute("book", new Book());
         List<Publisher> publishers = publisherService.getAllPublishers();
         model.addAttribute("publishers", publishers);
-
-
         return "books/add";
     }
 
@@ -100,5 +98,4 @@ public class BookController {
         model.addAttribute("searchTitle", title);
          return  "/books/search";
     }
-
 }

@@ -1,7 +1,9 @@
 package librarymanagement.bookmanagement.service;
 
 
+import librarymanagement.bookmanagement.model.Book;
 import librarymanagement.bookmanagement.model.Publisher;
+import librarymanagement.bookmanagement.repository.BookRepository;
 import librarymanagement.bookmanagement.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,9 @@ import java.util.List;
 public class PublisherServiceImpl implements PublisherService {
     @Autowired
     private PublisherRepository publisherRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @Override
     public List<Publisher> getAllPublishers() {
@@ -40,4 +45,10 @@ public class PublisherServiceImpl implements PublisherService {
     public void deletePublisher(Long id) {
         publisherRepository.deleteById(id);
     }
+    @Override
+    public List<Book> getBooksByPublisherId(Long publisherId) {
+        return bookRepository.findByPublisherId(publisherId);
+    }
+
+
 }
