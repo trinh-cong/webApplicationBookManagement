@@ -26,6 +26,7 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll(pageable);
     }
 
+
     @Override
     public void saveBook(Book book, MultipartFile imageFile) {
         if (imageFile != null && !imageFile.isEmpty()) {
@@ -36,7 +37,7 @@ public class BookServiceImpl implements BookService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             // Giữ nguyên ảnh cũ khi không có ảnh mới được chọn
             Book existingBook = bookRepository.findById(book.getId()).orElse(null);
             if (existingBook != null) {
@@ -45,6 +46,7 @@ public class BookServiceImpl implements BookService {
         }
         bookRepository.save(book);
     }
+
     @Override
     public void saveBook(Book book) {
         bookRepository.save(book);
@@ -61,8 +63,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> searchBooks(String title, Pageable pageable) {
-        return bookRepository.findByTitleContaining(title, pageable);
+    public Page<Book> searchBooks(String title, Double price, String publisher, Pageable pageable) {
+        if (price != null) {
+            return bookRepository.findByTitleContainingAndPriceAndPublisher_NameContaining(title, price, publisher, pageable);
+        } else {
+            return bookRepository.findByTitleContainingAndPublisher_NameContaining(title, publisher, pageable);
+        }
+    }
     }
 
-}

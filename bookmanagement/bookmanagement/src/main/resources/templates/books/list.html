@@ -8,11 +8,12 @@
 <body>
 
 <h2>Book List</h2>
-<div>
-    <form th:action="@{/books/search}" method="get">
-        <input type="text" name="title" placeholder="Search by title" th:value="${searchTitle}"/>
-        <button type="submit">Search</button>
-    </form>
+<form class="form-inline mb-3" th:action="@{/books/search}" method="get" onsubmit="return validateSearchForm()">
+    <input type="text" class="form-control mr-2" name="title" placeholder="Search by title" th:value="${searchTitle}"/>
+    <input type="text" class="form-control mr-2" name="price" placeholder="Search by price" th:value="${searchPrice}"/>
+    <input type="text" class="form-control mr-2" name="publisher" placeholder="Search by publisher" th:value="${searchPublisher}"/>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
 </div>
 <table>
     <tr>
@@ -68,6 +69,17 @@
 <!--        <a th:href="@{/publishers(page=${currentPage + 1})}">&gt;&gt;</a>-->
 <!--    </li>-->
 <!--</ul>-->
+<script>
+    function validateSearchForm() {
+        var priceInput = document.getElementsByName("price")[0].value;
+        // Kiểm tra xem giá trị có phải là số không
+        if (isNaN(priceInput)) {
+            alert("Price must be a number.");
+            return false; // Ngăn chặn gửi form nếu giá trị không phải là số
+        }
+        return true; // Cho phép gửi form nếu giá trị là số
+    }
+</script>
 
 <a th:href="@{/books/add}">Add New Book</a>
 

@@ -87,15 +87,25 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public String searchBooks(@RequestParam("title") String title,
-                              @RequestParam(defaultValue = "0") int page,
+    public String searchBooks(@RequestParam(name = "title", required = false) String title,
+                              @RequestParam(name = "price", required = false) Double price,
+                              @RequestParam(name = "publisher", required = false) String publisher,
+                              @RequestParam(name = "page", defaultValue = "0") int page,
                               Model model) {
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<Book> bookPage = bookService.searchBooks(title, pageable);
+        // Gọi phương thức searchBooks của service
+        Page<Book> bookPage = bookService.searchBooks(title, price, publisher, PageRequest.of(page, 5));
+
+        // Đặt dữ liệu vào model và trả về view
         model.addAttribute("books", bookPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", bookPage.getTotalPages());
         model.addAttribute("searchTitle", title);
-         return  "/books/search";
+        model.addAttribute("searchPrice", price);
+        model.addAttribute("searchPublisher", publisher);
+
+        return "/books/search";
     }
-}
+    }
+
+
+

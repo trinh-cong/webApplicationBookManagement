@@ -1,62 +1,83 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Search Results</title>
-    <link rel="stylesheet" th:href="@{/style/search.css}">
-</head>
-<body>
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Search Results</title>
+        <link rel="stylesheet" th:href="@{/style/search.css}">
 
-<h2>Search Results</h2>
+        <style>
+            .error-message {
+                color: red;
+                margin-top: 5px;
+            }
+        </style>
+        <script>
+            function validateSearchForm() {
+                var priceInput = document.getElementById("priceInput");
+                var priceError = document.getElementById("priceError");
 
-<div>
-    <form th:action="@{/books/search}" method="get">
-        <input type="text" name="title" placeholder="Search by title" th:value="${searchTitle}"/>
-        <button type="submit">Search</button>
-    </form>
-</div>
+                if (priceInput.value.trim() !== "" && isNaN(priceInput.value.trim())) {
+                    priceError.innerText = "Price must be a number";
+                    return false;
+                } else {
+                    priceError.innerText = "";
+                    return true;
+                }
+            }
+        </script>
+    </head>
+    <body>
 
-<div>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Publisher</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="container mt-3">
+        <h2>Search Results</h2>
 
-        <tr th:each="book : ${books}">
-            <td th:text="${book.id}"></td>
-            <td th:text="${book.title}"></td>
-            <td th:text="${book.price}"></td>
-            <td th:text="${book.description}"></td>
-            <td th:text="${book.publisher.name}"></td>
-        </tr>
-        </tbody>
-    </table>
+        <form class="form-inline mb-3" th:action="@{/books/search}" method="get" onsubmit="return validateSearchForm()">
+            <input type="text" class="form-control mr-2" name="title" placeholder="Search by title" th:value="${searchTitle}"/>
+            <input type="text" class="form-control mr-2" name="price" id="priceInput" placeholder="Search by price" th:value="${searchPrice}"/>
+            <div id="priceError" class="error-message"></div>
+            <input type="text" class="form-control mr-2" name="publisher" placeholder="Search by publisher" th:value="${searchPublisher}"/>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
 
-    <div>
-        <ul>
-            <li th:if="${currentPage > 0}">
-                <a th:href="@{/books/search(title=${searchTitle},page=${currentPage - 1})}">Previous</a>
-            </li>
-            <li th:each="page, stat : ${#numbers.sequence(0, totalPages - 1)}" th:class="${currentPage == stat.index} ? 'active' : ''">
-                <a th:href="@{/books/search(title=${searchTitle},page=${stat.index})}" th:text="${stat.index + 1}"></a>
 
-            </li>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Publisher</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.price}"></td>
+                <td th:text="${book.description}"></td>
+                <td th:text="${book.publisher.name}"></td>
+            </tr>
+            </tbody>
+        </table>
 
-            <li th:if="${currentPage < totalPages - 1}">
-                <a th:href="@{/books/search(title=${searchTitle}, page=${currentPage + 1})}">Next</a>
-            </li>
+        <div>
+            <ul class="pagination">
+                <li th:if="${currentPage > 0}">
+                    <a class="page-link" th:href="@{/books/search(title=${searchTitle},price=${searchPrice},publisher=${searchPublisher},page=${currentPage - 1})}">Previous</a>
+                </li>
+                <li th:each="page, stat : ${#numbers.sequence(0, totalPages - 1)}" th:class="${currentPage == stat.index} ? 'page-item active' : 'page-item'">
+                    <a class="page-link" th:href="@{/books/search(title=${searchTitle},price=${searchPrice},publisher=${searchPublisher},page=${stat.index})}" th:text="${stat.index + 1}"></a>
+                </li>
+                <li th:if="${currentPage < totalPages - 1}">
+                    <a class="page-link" th:href="@{/books/search(title=${searchTitle},price=${searchPrice},publisher=${searchPublisher}, page=${currentPage + 1})}">Next</a>
+                </li>
+            </ul>
+        </div>
 
-        </ul>
+        <a class="btn btn-secondary" th:href="@{/books}">Back to Book List</a>
     </div>
-</div>
-<a th:href="@{/books}">Back to Book List</a>
 
-</body>
-</html>
+
+    </body>
+    </html>
