@@ -49,6 +49,9 @@ public class PublisherServiceImpl implements PublisherService {
     public List<Book> getBooksByPublisherId(Long publisherId) {
         return bookRepository.findByPublisherId(publisherId);
     }
-
+    public boolean isPublisherNameExists(String name) {
+        // Kiểm tra xem tên nhà xuất bản đã tồn tại trong cơ sở dữ liệu hay chưa
+        return publisherRepository.existsByName(name);
+    }
 
 }

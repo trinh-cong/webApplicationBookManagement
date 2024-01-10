@@ -1,4 +1,3 @@
-<!-- src/main/resources/templates/publishers/create.html -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,10 +6,13 @@
     <link rel="stylesheet" type="text/css" href="/style/add-publishers.css">
 </head>
 <body>
-<h2>Create Publisher</h2>
+<h2>Add Publisher</h2>
 <form th:object="${publisher}" th:action="@{/publishers/add}" method="post">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" th:field="*{name}" />
+    <br>
+    <!-- Hiển thị thông báo lỗi nếu có -->
+    <span th:if="${error}" style="color: red" th:text="${error}"></span>
     <br>
     <input type="submit" value="Add">
 </form>

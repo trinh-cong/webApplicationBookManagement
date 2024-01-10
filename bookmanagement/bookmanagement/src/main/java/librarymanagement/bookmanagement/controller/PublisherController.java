@@ -41,11 +41,24 @@ public class PublisherController {
     }
 
     @PostMapping("/add")
-    public String addPublisher(@ModelAttribute("publisher") Publisher publisher) {
+    public String addPublisher(@ModelAttribute("publisher") Publisher publisher, Model model) {
+        // Kiểm tra xem tên nhà xuất bản có giá trị không
+        if (publisher.getName() == null || publisher.getName().trim().isEmpty()) {
+            model.addAttribute("error", "Publisher name cannot be empty");
+            return "publishers/add";
+        }
+
+        // Kiểm tra xem tên nhà xuất bản đã tồn tại hay chưa
+        if (publisherService.isPublisherNameExists(publisher.getName())) {
+            // Tên nhà xuất bản đã tồn tại, gửi thông báo lỗi về giao diện
+            model.addAttribute("error", "Publisher name already exists");
+            return "publishers/add";
+        }
+
+        // Thêm nhà xuất bản vào cơ sở dữ liệu
         publisherService.savePublisher(publisher);
         return "redirect:/publishers";
     }
-
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
         Publisher publisher = publisherService.getPublisherById(id);
