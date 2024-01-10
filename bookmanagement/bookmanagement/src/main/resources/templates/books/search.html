@@ -34,7 +34,7 @@
         <form class="form-inline mb-3" th:action="@{/books/search}" method="get" onsubmit="return validateSearchForm()">
             <input type="text" class="form-control mr-2" name="title" placeholder="Search by title" th:value="${searchTitle}"/>
             <input type="text" class="form-control mr-2" name="price" id="priceInput" placeholder="Search by price" th:value="${searchPrice}"/>
-            <div id="priceError" class="error-message"></div>
+            <span id="priceError" class="error-message"></span>
             <input type="text" class="form-control mr-2" name="publisher" placeholder="Search by publisher" th:value="${searchPublisher}"/>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
